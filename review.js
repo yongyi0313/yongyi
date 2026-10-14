@@ -125,7 +125,107 @@
       ? r.met + ' × 3.5 × ' + r.weight + ' ÷ 200 × ' + (sec / 60).toFixed(1) + ' 分鐘 ＝ ' + kcal.toFixed(1) + ' kcal（估算值，非 GPS 測量）'
       : '未記錄');
   }
+    function renderComparison(files, tracks) {
+    const result = $('comparisonResult');
+    result.replaceChildren();
+    const [a, b] = tracks;
+    const speed = r => r.seconds > 0 ? r.meters / 1000 / (r.seconds / 3600) : null;
+    const calories = r => isNum(r.kcal) ? r.kcal
+      : isNum(r.met) && isNum(r.weight) ? MoveCore.calories(r.met, r.weight, r.seconds) : null;
+    const signed = (value, digits, unit) =>
+      (value > 0 ? '+' : value < 0 ? '−' : '') + Math.abs(value).toFixed(digits) + ' ' + unit;
+    const rows = [
+      { label: '總距離', a: a.meters / 1000, b: b.meters / 1000, unit: 'km', digits: 2 },
+      {
+        label: '總時間', a: a.seconds, b: b.seconds, format: fmtTime,
+        difference: v => (v > 0 ? '+' : v < 0 ? '−' : '') + fmtTime(Math.abs(v))
+      },
+      { label: '平均速度', a: speed(a), b: speed(b), unit: 'km/h', digits: 2 },
+      { label: '消耗熱量', a: calories(a), b: calories(b), unit: 'kcal', digits: 1 },
+      { label: '有效點數', a: a.points.length, b: b.points.length, unit: '點', digits: 0 }
+    ];
 
+    const table = document.createElement('table');
+    table.className = 'comparison-table';
+    const caption = document.createElement('caption');
+    caption.textContent = '兩份運動軌跡數據比較';
+    table.append(caption);
+
+    const thead = document.createElement('thead');
+    const headRow = document.createElement('tr');
+    for (const label of ['數據', files[0].name, files[1].name, '差異（B − A）']) {
+      const th = document.createElement('th');
+      th.textContent = label;
+      headRow.append(th);
+    }
+    thead.append(headRow);
+    table.append(thead);
+
+    const tbody = document.createElement('tbody');
+    for (const item of rows) {
+      const row = document.createElement('tr');
+      const label = document.createElement('th');
+      label.scope = 'row';
+      label.textContent = item.label;
+      row.append(label);
+
+      for (const value of [item.a, item.b]) {
+        const cell = document.createElement('td');
+        cell.textContent = value === null
+          ? '未記錄'
+          : item.format ? item.format(value) : value.toFixed(item.digits) + ' ' + item.unit;
+        row.append(cell);
+      }
+
+      const difference = document.createElement('td');
+      difference.textContent = item.a === null || item.b === null
+        ? '—'
+        : item.difference
+          ? item.difference(item.b - item.a)
+          : signed(item.b - item.a, item.digits, item.unit);
+      row.append(difference);
+      tbody.append(row);
+    }
+    table.append(tbody);
+    result.append(table);
+  }
+
+  async function compareFiles(files) {
+    $('comparisonResult').replaceChildren();
+    if (files.length !== 2) {
+      setStatus('請一次選取或拖曳剛好兩份軌跡 JSON。');
+      return;
+    }
+
+    for (const file of files) {
+      if (file.size > MAX_BYTES) {
+        setStatus(file.name + ' 超過 5 MB，無法開啟。');
+        return;
+      }
+      if (!/\.json$/i.test(file.name) && file.type !== 'application/json') {
+        setStatus(file.name + ' 不是 JSON 檔。請選取兩份 PACE 軌跡 JSON。');
+        return;
+      }
+    }
+
+    let tracks;
+    try {
+      tracks = await Promise.all([...files].map(async file => {
+        const text = (await file.text()).replace(/^﻿/, '');
+        const track = JSON.parse(text);
+        if (!validTrack(track)) throw new Error(file.name + ' 不是 PACE 的軌跡 JSON。');
+        return track;
+      }));
+    } catch (error) {
+      setStatus(error instanceof SyntaxError
+        ? '所選檔案含有無效 JSON，請確認兩份檔案格式。'
+        : error.message);
+      return;
+    }
+
+    renderComparison(files, tracks);
+    setStatus('已在本機完成兩份軌跡比較；檔案未上傳。');
+  }
   function showList(rows, name) {
     const head = rows[0], body = rows.slice(1);
     const distIdx = head.indexOf('距離 m');
@@ -174,6 +274,19 @@
   }
 
   $('file').addEventListener('change', e => handleFiles(e.target.files));
+  $('compareFiles').addEventListener('change', e => compareFiles(e.target.files));
+const compareDrop = $('compareDrop');
+['dragenter', 'dragover'].forEach(ev => compareDrop.addEventListener(ev, e => {
+e.preventDefault();
+e.stopPropagation();
+compareDrop.classList.add('over');
+}));
+['dragleave', 'drop'].forEach(ev => compareDrop.addEventListener(ev, e => {
+e.preventDefault();
+e.stopPropagation();
+compareDrop.classList.remove('over');
+if (ev === 'drop') compareFiles(e.dataTransfer.files);
+}));
   const drop = $('drop');
   ['dragenter', 'dragover'].forEach(ev => document.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
   ['dragleave', 'drop'].forEach(ev => document.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
