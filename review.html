@@ -19,6 +19,10 @@ h1{font-size:28px;margin:0 0 6px}
 .lead{color:var(--muted);margin:0 0 18px;font-size:14px;line-height:1.6}
 .drop{background:#fff;border:1.5px dashed #b9c0aa;border-radius:14px;padding:26px 18px;text-align:center}
 .drop input{font:inherit}
+.drop.over{border-color:var(--orange);background:#fffaf7}
+.comparison-table th:first-child{min-width:110px}
+.comparison-table td:not(:first-child),.comparison-table th:not(:first-child){text-align:right}
+.comparison-result{margin-top:14px}
 #status{margin:12px 0 0;min-height:1.4em;color:var(--muted);font-size:14px}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:18px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -52,6 +56,15 @@ th{color:var(--muted);font-weight:600}
   <p class="note">也可以把檔案拖曳到這個框內。一次開啟一份軌跡 JSON，或一份摘要 CSV。</p>
 </section>
 <p id="status" role="status" aria-live="polite"></p>
+<section class="card" aria-labelledby="compareTitle">
+  <h2 id="compareTitle">比較兩份軌跡</h2>
+  <p class="note">同時選取兩份「軌跡」JSON，或將兩個 JSON 檔拖曳到下方。檔案只在你的瀏覽器中讀取，不會上傳。</p>
+  <div class="drop" id="compareDrop">
+    <input id="compareFiles" type="file" accept=".json,application/json" multiple>
+    <p class="note">請一次選取兩份 PACE 軌跡 JSON。</p>
+  </div>
+  <div id="comparisonResult" class="comparison-result table-wrap" aria-live="polite"></div>
+</section>
 
 <section class="card" id="detail" hidden>
   <div class="stats">
