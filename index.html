@@ -9,8 +9,94 @@
 <section id="history" class="history-section"><div class="sectionheading"><div><span class="overline">ACTIVITY LOG</span><h2>每一次，都算數。</h2></div><button id="exportAll" class="export">匯出紀錄 <span>↓</span></button></div><div class="historybar"><div class="filters" aria-label="篩選紀錄"><button class="selected" data-filter="all" aria-pressed="true">全部紀錄</button><button data-filter="real" aria-pressed="false">GPS 運動</button><button data-filter="demo" aria-pressed="false">示範</button></div><span id="historyTotal">尚無運動紀錄</span></div><div id="records"></div><button id="deleteAll" class="delete-all">管理資料：清除全部紀錄</button></section>
 <section class="editorial-cards"><article class="editorial-card"><img src="assets/track-essentials.webp" alt="生成示意：跑道旁的跑鞋與運動裝備" loading="lazy"><div><span class="overline">TRAINING NOTES</span><h3>把 20 分鐘，留給自己。</h3><p>暖身、步行與緩和。從一次舒服的練習開始。</p><a href="handout.html">閱讀課程講義 →</a><small>　AI 生成情境示意</small></div></article><article class="editorial-card" data-cloud-only><img src="assets/campus-run.webp" alt="生成示意：同學一起運動" loading="lazy"><div><span class="overline">CLASSROOM CONNECTION</span><h3>一堂課，連結每個人的進步。</h3><p>加入班級、繳交運動紀錄，讓老師看見你的練習。</p><a href="classroom.html">開啟班級中心 →</a><small>　AI 生成情境示意</small></div></article></section><footer><span><b>PACE</b> 校園運動教學模板 · 非逢甲大學官方系統</span><a href="guide.html">裝置與隱私說明 ↗</a><p>地圖 © OpenStreetMap contributors。完整位置軌跡僅儲存在本機；<span data-cloud-only>運動摘要可由你確認後繳交至班級資料庫。</span>地圖供應者可接收 IP 與地圖範圍，外部導航會接收目的地。</p></footer>
 </main></div>
-<dialog id="setupDialog"><div class="dialog-head"><div><span class="overline">BEFORE YOU GO</span><h2>準備開始</h2></div><button id="closeSetup" class="close" aria-label="關閉設定">×</button></div><p class="dialog-intro">確認個人資料，讓這次運動有自己的紀錄。</p><form id="profile"><fieldset id="fields"><label>課堂代號 <span>選填，不需真實姓名</span><input id="alias" maxlength="24" placeholder="例如 A 組 07"></label><div class="three"><label>身高 <span>cm</span><input id="height" type="number" min="80" max="230" value="165" required></label><label>體重 <span>kg</span><input id="weight" type="number" min="20" max="250" step="0.1" value="60" required></label><label>年齡 <span>歲</span><input id="age" type="number" min="6" max="100" value="20" required></label></div><label>運動方式<select id="mode"><option value="3.5">舒適步行 · 3.5 MET</option><option value="4.8">快走 · 4.8 MET</option><option value="7.5">慢跑 · 7.5 MET</option></select></label><div class="privacy-note"><svg><use href="#i-cross"/></svg><span>保持網頁在前景。切換 App 或鎖屏會暫停，返回後請按繼續。</span></div><label class="check"><input id="consent" type="checkbox" required><span>同意在此裝置記錄位置與運動資料，可隨時刪除。</span></label></fieldset><button class="primary" id="start" type="submit">開始 GPS 運動 <svg><use href="#i-arrow"/></svg></button></form><button class="demo-link" id="demo">先體驗示範運動</button><p class="fine">熱量僅供教學參考。身高、年齡不參與估算；成人 MET 不宜作未滿 19 歲學生的個人評估。</p></dialog>
+<dialog id="setupDialog"><div class="dialog-head"><div><span class="overline">BEFORE YOU GO</span><h2>準備開始</h2></div><button id="closeSetup" class="close" aria-label="關閉設定">×</button></div><p class="dialog-intro">確認個人資料，讓這次運動有自己的紀錄。</p><form id="profile"><fieldset id="fields"><label>課堂代號 <span>選填，不需真實姓名</span><input id="alias" maxlength="24" placeholder="例如 A 組 07">
+</label>
+  <label class="field" style="margin-top: 14px; display: block;">
+  <span style="font-weight: 600; display: block; margin-bottom: 6px;">選擇你想去的地方 <small style="color: #888; font-weight: normal;">選填，可輸入地名或地址</small></span>
+  <input type="text" id="custom-dest-input" placeholder="例如：逢甲大學、全家便利商店..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box;" />
+</label><div class="three"><label>身高 <span>cm</span><input id="height" type="number" min="80" max="230" value="165" required></label><label>體重 <span>kg</span><input id="weight" type="number" min="20" max="250" step="0.1" value="60" required></label><label>年齡 <span>歲</span><input id="age" type="number" min="6" max="100" value="20" required></label></div><label>運動方式<select id="mode"><option value="3.5">舒適步行 · 3.5 MET</option><option value="4.8">快走 · 4.8 MET</option><option value="7.5">慢跑 · 7.5 MET</option></select></label><div class="privacy-note"><svg><use href="#i-cross"/></svg><span>保持網頁在前景。切換 App 或鎖屏會暫停，返回後請按繼續。</span></div><label class="check"><input id="consent" type="checkbox" required><span>同意在此裝置記錄位置與運動資料，可隨時刪除。</span></label></fieldset><button class="primary" id="start" type="submit">開始 GPS 運動 <svg><use href="#i-arrow"/></svg></button></form><button class="demo-link" id="demo">先體驗示範運動</button><p class="fine">熱量僅供教學參考。身高、年齡不參與估算；成人 MET 不宜作未滿 19 歲學生的個人評估。</p></dialog>
 <dialog id="energyDialog"><div class="dialog-head"><h2>熱量如何估算？</h2><button class="close" id="closeEnergy" aria-label="關閉熱量說明">×</button></div><p>以你選擇的活動強度（MET）、體重與運動時間估算總消耗，包含休息代謝。</p><div class="formula">MET × 3.5 × 體重 kg ÷ 200 × 分鐘</div><p class="fine">不是 GPS 直接測量，也不能作為醫療或飲食處方。實際消耗因速度、坡度與個人體能而異。</p><a href="handout.html">查看完整教學講義 →</a></dialog>
 <script src="vendor/leaflet.js"></script><script src="mode.js"></script>
 <script src="tiles.js"></script>
-<script src="core.js"></script><script src="app.js"></script><script src="cloud-upload.js"></script></body></html>
+<script src="core.js"></script><script src="app.js"></script><script src="cloud-upload.js"></script><script>
+  let targetCoords = null;
+  let customWatchId = null;
+  let customStartTime = null;
+  let customLastPos = null;
+  let customTotalDist = 0;
+
+  function calcDistMeters(lat1, lon1, lat2, lon2) {
+    const R = 6371e3;
+    const φ1 = (lat1 * Math.PI) / 180, φ2 = (lat2 * Math.PI) / 180;
+    const Δφ = ((lat2 - lat1) * Math.PI) / 180, Δλ = ((lon2 - lon1) * Math.PI) / 180;
+    const a = Math.sin(Δφ/2)**2 + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ/2)**2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  async function searchLocation(query) {
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
+      const data = await res.json();
+      if (data && data.length > 0) {
+        return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return null;
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const profileForm = document.getElementById('profile');
+    if (!profileForm) return;
+
+    profileForm.addEventListener('submit', async () => {
+      const destName = document.getElementById('custom-dest-input')?.value.trim();
+      customStartTime = Date.now();
+      customTotalDist = 0;
+      customLastPos = null;
+
+      if (!destName) return; // 沒填就維持原樣正常運動
+
+      targetCoords = await searchLocation(destName);
+      if (!targetCoords) {
+        alert(`⚠️ 找不到「${destName}」的座標，將以一般模式運動。`);
+        return;
+      }
+
+      if (customWatchId) navigator.geolocation.clearWatch(customWatchId);
+
+      customWatchId = navigator.geolocation.watchPosition((pos) => {
+        const { latitude, longitude } = pos.coords;
+
+        if (customLastPos) {
+          customTotalDist += calcDistMeters(customLastPos.lat, customLastPos.lng, latitude, longitude);
+        }
+        customLastPos = { lat: latitude, lng: longitude };
+
+        const distLeft = calcDistMeters(latitude, longitude, targetCoords.lat, targetCoords.lng);
+
+        // 判定進入 25 公尺內視為抵達
+        if (distLeft <= 25) {
+          navigator.geolocation.clearWatch(customWatchId);
+          customWatchId = null;
+
+          // 自動點擊原網站的結束按鈕
+          const stopBtn = Array.from(document.querySelectorAll('button')).find(b => 
+            b.textContent.includes('結束並儲存') || b.textContent.includes('結束')
+          );
+          if (stopBtn) stopBtn.click();
+
+          const totalSec = Math.floor((Date.now() - customStartTime) / 1000);
+          const mins = Math.floor(totalSec / 60);
+          const secs = totalSec % 60;
+          const distInt = Math.round(customTotalDist);
+
+          setTimeout(() => {
+            alert(`🎉 已抵達目的地！\n總距離：${distInt} 公尺\n用時：${mins} 分 ${secs} 秒`);
+          }, 600);
+        }
+      }, null, { enableHighAccuracy: true });
+    });
+  });
+</script></body></html>
