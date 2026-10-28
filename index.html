@@ -144,7 +144,24 @@
   <label class="field" style="margin-top: 14px; display: block;">
   <span style="font-weight: 600; display: block; margin-bottom: 6px;">選擇你想去的地方 <small style="color: #888; font-weight: normal;">選填，可輸入地名或地址</small></span>
   <input type="text" id="custom-dest-input" placeholder="例如：逢甲大學、全家便利商店..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box;" />
-</label><div class="three"><label>身高 <span>cm</span><input id="height" type="number" min="80" max="230" value="165" required></label><label>體重 <span>kg</span><input id="weight" type="number" min="20" max="250" step="0.1" value="60" required></label><label>年齡 <span>歲</span><input id="age" type="number" min="6" max="100" value="20" required></label></div><label>運動方式<select id="mode"><option value="3.5">舒適步行 · 3.5 MET</option><option value="4.8">快走 · 4.8 MET</option><option value="7.5">慢跑 · 7.5 MET</option></select></label><div class="privacy-note"><svg><use href="#i-cross"/></svg><span>保持網頁在前景。切換 App 或鎖屏會暫停，返回後請按繼續。</span></div><label class="check"><input id="consent" type="checkbox" required><span>同意在此裝置記錄位置與運動資料，可隨時刪除。</span></label></fieldset><button class="primary" id="start" type="submit">開始 GPS 運動 <svg><use href="#i-arrow"/></svg></button></form><button class="demo-link" id="demo">先體驗示範運動</button><p class="fine">熱量僅供教學參考。身高、年齡不參與估算；成人 MET 不宜作未滿 19 歲學生的個人評估。</p></dialog>
+<div class="field" style="margin-top: 14px;">
+  <span style="font-weight: 600; display: block; margin-bottom: 6px; color: #4b5563;">
+    🎯 選擇或輸入目的地 <small style="color: #8b5cf6; font-weight: normal;">(選填，支援附近快選與自訂)</small>
+  </span>
+
+  <!-- 1. 附近 5 大地標快速下拉選單 -->
+  <select id="quick-dest-select" style="width: 100%; padding: 10px; border: 1.5px solid #e4def5; border-radius: 10px; background-color: #fbf9ff; margin-bottom: 8px; outline: none; font-size: 14px;">
+    <option value="">⚡ 選擇附近推薦地標（或自行輸入）...</option>
+    <option value="逢甲大學 人言大樓">1. 人言大樓</option>
+    <option value="逢甲大學 圖書館">2. 逢甲大學圖書館</option>
+    <option value="逢甲大學 忠勤樓">3. 忠勤樓</option>
+    <option value="逢甲大學 體育館">4. 體育館</option>
+    <option value="逢甲大學 正門">5. 逢甲大學正門</option>
+  </select>
+
+  <!-- 2. 手動輸入/自動帶入框 -->
+  <input type="text" id="custom-dest-input" placeholder="可選上方地標，或在此輸入任意地點..." style="width: 100%; padding: 10px; border: 1.5px solid #e4def5; border-radius: 10px; background-color: #fbf9ff; box-sizing: border-box; outline: none; font-size: 14px;" />
+</div><label>體重 <span>kg</span><input id="weight" type="number" min="20" max="250" step="0.1" value="60" required></label><label>年齡 <span>歲</span><input id="age" type="number" min="6" max="100" value="20" required></label></div><label>運動方式<select id="mode"><option value="3.5">舒適步行 · 3.5 MET</option><option value="4.8">快走 · 4.8 MET</option><option value="7.5">慢跑 · 7.5 MET</option></select></label><div class="privacy-note"><svg><use href="#i-cross"/></svg><span>保持網頁在前景。切換 App 或鎖屏會暫停，返回後請按繼續。</span></div><label class="check"><input id="consent" type="checkbox" required><span>同意在此裝置記錄位置與運動資料，可隨時刪除。</span></label></fieldset><button class="primary" id="start" type="submit">開始 GPS 運動 <svg><use href="#i-arrow"/></svg></button></form><button class="demo-link" id="demo">先體驗示範運動</button><p class="fine">熱量僅供教學參考。身高、年齡不參與估算；成人 MET 不宜作未滿 19 歲學生的個人評估。</p></dialog>
 <dialog id="energyDialog"><div class="dialog-head"><h2>熱量如何估算？</h2><button class="close" id="closeEnergy" aria-label="關閉熱量說明">×</button></div><p>以你選擇的活動強度（MET）、體重與運動時間估算總消耗，包含休息代謝。</p><div class="formula">MET × 3.5 × 體重 kg ÷ 200 × 分鐘</div><p class="fine">不是 GPS 直接測量，也不能作為醫療或飲食處方。實際消耗因速度、坡度與個人體能而異。</p><a href="handout.html">查看完整教學講義 →</a></dialog>
 <script src="vendor/leaflet.js"></script><script src="mode.js"></script>
 <script src="tiles.js"></script>
