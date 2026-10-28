@@ -1,74 +1,88 @@
 <!doctype html><html lang="zh-Hant"><head><style>
-  /* 1. 全域字體與側邊欄美化 */
+  /* 1. 全域字體與淡紫底色 */
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    background-color: #fbfaff !important; /* 帶有微透淡紫的明亮底色 */
   }
 
+  /* 2. 左側側邊欄：柔和淺紫調 */
   aside.sidebar {
-    background: #fafafa !important;
-    border-right: 1px solid #eaeaea !important;
+    background: #f7f4fd !important;
+    border-right: 1px solid #ede8fa !important;
   }
 
-  /* 2. 主題色與主要按鈕（科技藍＋圓角微陰影） */
+  /* 3. 主題按鈕：精緻薰衣草紫 + 柔和紫色投影 */
   button[type="submit"], 
   .primary-btn, 
   #exercise button,
   button:has(> svg),
   .start-btn {
-    background-color: #2563eb !important;
+    background-color: #8b5cf6 !important; /* 經典薰衣草紫 */
     border-radius: 12px !important;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3) !important;
     border: none !important;
+    color: #ffffff !important;
     transition: all 0.2s ease !important;
   }
 
   button[type="submit"]:hover,
   #exercise button:hover {
-    background-color: #1d4ed8 !important;
+    background-color: #7c3aed !important; /* 滑鼠懸停微深紫 */
     transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(139, 92, 246, 0.4) !important;
   }
 
-  /* 3. 數據面板、卡片圓角與質感陰影 */
+  /* 4. 運動面板、數據卡片：淡紫微透卡片與邊框 */
   aside.session-panel, 
   #exercise, 
   .editorial-card,
   section.workout {
-    border-radius: 16px !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
-    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    background: #ffffff !important;
+    border-radius: 18px !important;
+    box-shadow: 0 8px 24px rgba(139, 92, 246, 0.08) !important;
+    border: 1px solid #f0ebfc !important;
   }
 
-  /* 4. 彈窗（準備開始介面）與輸入框圓潤美化 */
+  /* 5. 準備開始彈窗：優雅柔紫風格 */
   dialog#setupDialog {
-    border-radius: 20px !important;
-    padding: 24px !important;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
-    border: none !important;
+    background: #ffffff !important;
+    border-radius: 22px !important;
+    padding: 26px !important;
+    box-shadow: 0 20px 48px rgba(139, 92, 246, 0.16) !important;
+    border: 1px solid #ede8fa !important;
   }
 
+  /* 6. 輸入框外觀美化與聚焦紫光效果 */
   dialog input, 
   dialog select,
   #custom-dest-input {
     border-radius: 10px !important;
-    border: 1.5px solid #e2e8f0 !important;
+    border: 1.5px solid #e4def5 !important;
     padding: 10px 14px !important;
-    background-color: #f8fafc !important;
+    background-color: #fbf9ff !important;
     outline: none !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
   }
 
   #custom-dest-input:focus,
   dialog input:focus,
   dialog select:focus {
-    border-color: #2563eb !important;
+    border-color: #8b5cf6 !important;
     background-color: #ffffff !important;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2) !important;
+  }
+
+  /* 7. 地圖上方的次要徽章或標籤強調色 */
+  .badge, [class*="tag"] {
+    background-color: #ede8fa !important;
+    color: #7c3aed !important;
   }
 </style><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#222824"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="vendor/leaflet.css"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="classroom.css"><title>PACE 校園運動 · 逢甲大學</title></head><body>
 <svg class="sprite" xmlns="http://www.w3.org/2000/svg"><symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 15v-5a4 4 0 0 1 4-4h5M18 9v5a4 4 0 0 1-4 4h-5"/></symbol><symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16M8 15v-4m5 4V7m5 8v-6"/></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5v15M12 5C8 2 3 4 3 4v14s5-2 9 2c4-4 9-2 9-2V4s-5-2-9 1Z"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol><symbol id="i-pin" viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2"/></symbol><symbol id="i-cross" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/><path d="M12 2v5m0 10v5M2 12h5m10 0h5"/></symbol></svg>
 <aside class="sidebar"><a class="brand" href="./" aria-label="PACE 校園運動首頁"><span class="brand-symbol">//</span>PACE<span class="brand-sub">校園運動</span></a><div class="workspace-label">FENG CHIA UNIVERSITY</div><nav class="sidenav"><a href="#exercise" class="active"><svg><use href="#i-route"/></svg>開始運動<span class="nav-dot"></span></a><a href="#history"><svg><use href="#i-chart"/></svg>運動紀錄</a><a href="classroom.html" data-cloud-only><svg><use href="#i-chart"/></svg>班級中心</a><a href="review.html"><svg><use href="#i-chart"/></svg>匯入檢視</a><a href="handout.html"><svg><use href="#i-book"/></svg>學習中心</a></nav><div class="side-bottom"><div class="campus-logo">FCU</div><strong>逢甲大學</strong><span>校園戶外運動課程</span><a href="guide.html">使用說明 <span>↗</span></a><div class="local-note"><i></i> 本機紀錄<span data-cloud-only> · 自選雲端繳交</span></div></div></aside>
 <div class="shell"><header class="topbar"><div class="breadcrumb">我的空間 <span>/</span> <strong>開始運動</strong></div><div class="topright"><span class="device-label">個人運動模式</span><span class="avatar">我</span></div></header><main>
 <section class="pageheading"><div><div class="overline">YOUR DAILY MOVEMENT</div><h1>校園運動<span class="title-dot">.</span></h1><p>依照自己的節奏，完成今天的練習。</p></div><div class="dateblock"><span id="todayDate"></span><small>逢甲大學 · 台中</small></div></section>
-<section class="image-hero"><img src="assets/campus-run.webp" alt="生成示意：學生在綠蔭步道慢跑" fetchpriority="high"><div class="image-hero-copy"><span>MOVE AT YOUR OWN PACE</span><h2>今天的路，<br>一起走。</h2><a href="classroom.html" data-cloud-only>進入班級中心 <span>↗</span></a></div><small class="image-credit">AI 生成情境示意 · 非校園實景</small></section><section class="workout" id="exercise"><div class="mapcard"><div class="maptop"><div class="map-title"><svg><use href="#i-pin"/></svg><strong>逢甲校園</strong><span>探索地圖</span></div><span class="status" id="badge">● 尚未定位</span></div><div class="maparea"><div id="map" aria-label="逢甲大學校園互動地圖"></div><div class="map-instruction">點選地圖設定集合點</div><div class="maptools"><button id="locate" aria-label="我的定位" title="我的定位"><svg><use href="#i-cross"/></svg></button><button id="campus" aria-label="回到校園" title="回到校園"><svg><use href="#i-pin"/></svg></button></div><div class="map-scale-note"><span class="track-key"></span>本次運動軌跡</div></div><div class="mapnote"><span class="destination-icon"><svg><use href="#i-route"/></svg></span><div><strong>集合點</strong><span id="targetInfo">在地圖上選擇老師指定的位置</span></div><a id="navigate" hidden target="_blank" rel="noopener">導航 ↗</a><button id="clearTarget" title="清除集合點" aria-label="清除集合點">×</button></div></div>
+</section><section class="workout" id="exercise"><div class="mapcard"><div class="maptop"><div class="map-title"><svg><use href="#i-pin"/></svg><strong>逢甲校園</strong><span>探索地圖</span></div><span class="status" id="badge">● 尚未定位</span></div><div class="maparea"><div id="map" aria-label="逢甲大學校園互動地圖"></div><div class="map-instruction">點選地圖設定集合點</div><div class="maptools"><button id="locate" aria-label="我的定位" title="我的定位"><svg><use href="#i-cross"/></svg></button><button id="campus" aria-label="回到校園" title="回到校園"><svg><use href="#i-pin"/></svg></button></div><div class="map-scale-note"><span class="track-key"></span>本次運動軌跡</div></div><div class="mapnote"><span class="destination-icon"><svg><use href="#i-route"/></svg></span><div><strong>集合點</strong><span id="targetInfo">在地圖上選擇老師指定的位置</span></div><a id="navigate" hidden target="_blank" rel="noopener">導航 ↗</a><button id="clearTarget" title="清除集合點" aria-label="清除集合點">×</button></div></div>
 <aside class="session-panel"><div class="session-top"><span><i></i> 本次運動</span><span id="activityLabel">舒適步行</span></div><div class="primarymetric"><span>累積距離</span><div><b id="distance">0.00</b><span>km</span></div></div><div class="metric-grid"><article><span>運動時間</span><strong id="elapsed">00:00</strong><small>不含暫停</small></article><article><span>平均速度</span><strong><b id="speed">0.0</b><em>km/h</em></strong><small>距離 ÷ 時間</small></article><article class="energy"><span>估算熱量 <button class="info-button" id="energyInfo" aria-label="查看熱量估算方式">i</button></span><strong><b id="calories">0</b><em>kcal</em></strong></article></div><div class="session-message" id="message" role="status" aria-live="polite">開啟定位，準備記錄你的第一步。</div><div class="actiondock"><button class="primary" id="openSetup"><span>開始運動</span><svg><use href="#i-arrow"/></svg></button><div class="controls"><button id="pause" disabled>Ⅱ 暫停</button><button id="finish" disabled>■ 結束並儲存</button></div></div><div class="signalbar"><span>GPS <b id="accuracy">—</b></span><span id="points">0 個有效點</span></div></aside></section>
 <section class="training-strip"><div class="training-icon"><svg><use href="#i-route"/></svg></div><div class="training-copy"><span>今日建議練習</span><strong>20 分鐘校園探索</strong></div><div class="training-steps"><span><i>01</i>暖身 5 分鐘</span><b>—</b><span><i>02</i>步行或慢跑</span><b>—</b><span><i>03</i>緩和與回顧</span></div><a href="handout.html">課程內容 <svg><use href="#i-arrow"/></svg></a></section>
 <section id="history" class="history-section"><div class="sectionheading"><div><span class="overline">ACTIVITY LOG</span><h2>每一次，都算數。</h2></div><button id="exportAll" class="export">匯出紀錄 <span>↓</span></button></div><div class="historybar"><div class="filters" aria-label="篩選紀錄"><button class="selected" data-filter="all" aria-pressed="true">全部紀錄</button><button data-filter="real" aria-pressed="false">GPS 運動</button><button data-filter="demo" aria-pressed="false">示範</button></div><span id="historyTotal">尚無運動紀錄</span></div><div id="records"></div><button id="deleteAll" class="delete-all">管理資料：清除全部紀錄</button></section>
